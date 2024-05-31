@@ -10,7 +10,7 @@ source "$iso_plugins_automation/config/config.sh"
 echo "Please update AWS credentials of AWS Delta 0 account before doing setup"
 
 # Log in to AWS SSO
-aws sso login
+#aws sso login
 
 # Log in to Docker registry
 aws ecr get-login-password --region "${aws_region}" --no-verify-ssl | \
