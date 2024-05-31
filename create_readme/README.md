@@ -1,93 +1,72 @@
 Plugin Parameters :
 
-	client_id(String)                                - The unique identifier of the application registered at Azure Active Directory.
+	client_id(String)                                - The unique identifier of the application registered at Azure Active Directory.Accept valid UUID only
 	client_secret(String)                            - Client Secret of the application registered at Azure Active Directory.
-	tenant_id(String)                                - The unique identifier of the Azure Active Directory
+	azure_active_directory_id(String)                - The unique identifier of the Azure Active Directory.(AAD > Properties > Directory ID).Accept valid UUID only
 	graph_api_version(String)                        - Microsoft graph API version. e.g v1.0, beta
-	verify_certs(Bool)                               - Should the TLS certificates be verified
-	timeout(Integer)                                 - request timeout
-	code(String)                                     - The authorization_code that the app requested. The app can use the authorization code to request an access token for the target resource.This is required for first API call to generate access_token.Later we store refresh_token to generate new access_token
-	redirect_uri(String)                             - The redirect_uri of your app, where authentication responses can be sent and received by your app. It must exactly match one of the redirect URIs you registered in the portal, except it must be URL-encoded.If you don't use default value please update redirect_uri in url while generating code in browser
-	proxyProtocol(String)                            - Proxy protocol
-	proxyHost(HostName | IPAddress)                  - Proxy Hostname or IP Address
-	proxyPort(Integer)                               - Proxy Port
-	proxyUser(String)                                - Proxy User
-	proxyPassword(String)                            - Proxy User Password
+	scope(String)                                    - The value passed for the scope parameter in this request should be the resource identifier (Application ID URI) of the resource you want, affixed with the .default suffix. For Microsoft Graph, the value is https://graph.microsoft.com/.default. This value informs the Microsoft identity platform endpoint that of all the application permissions you have configured for your app, it should issue a token for the ones associated with the resource you want to use.
 
 Commands :
 
-	1. sendMessage
-		Send a message to a channel
+	1. get_users
+		Get users in the organization.
 		input -
-			teamDisplayName(String)                        - displayName for the team to send a message to
-			channelDisplayName(String)                     - displayName for the channel to send a message to
-			message(String)                                - message to send to the channel
+			name(String List)                              - The display name of the user.
+			email(String List)                             - The user's email address.Accept valid emails only
+			enable_raw_json(Bool)                          - Enable Raw Json output? If True, will additionally give rawJson returned by Microsoft graph API
 		output -
-			statusMsg(String)                              - Status of the plug-in execution
-			success(Bool)                                  - True if message sent
+			user_details(azure_ad.AzureActiveDirectoryUser List)                    - Microsoft Azure Active Directory users
+			raw_json(JSON)                                 - RawJson as returned by graph API. Will be returned if enable_raw_json is true
+			task_success(Bool)                             - False if any part of task fails
+			status_msg(String)                             - Task execution status message
+			response_code(Integer)                         - Response code of the api response
 
-	2. replyMessage
-		Reply to a message in a channel
+	2. get_users_advance
+		Get users in the organization.
 		input -
-			teamDisplayName(String)                        - displayName for the team to reply to a message
-			channelDisplayName(String)                     - displayName for the channel to reply a message
-			messageid(String)                              - id of the message to reply to (watchChannelAdapter provides in output)
-			message(String)                                - message to reply with
+			id(String List)                                - The unique identifier for the user. If unique identifier is given, other search parameters will be ignored.Accept valid UUID only
+			name(String List)                              - The display name of the user
+			given_name(String List)                        - The first name of the user.
+			job_title(String List)                         - The user's job title.
+			email(String List)                             - The user's email address.accept valid email.Accept valid email only
+			surname(String List)                           - The last name of the user.
+			user_principal_name(String List)               - The user's principal name.
+			enable_raw_json(Bool)                          - Enable Raw Json output? If True, will additionally give rawJson returned by Microsoft graph API
+			properties(String)                             - Properties to be selected as a comma separated string
 		output -
-			statusMsg(String)                              - Status of the plug-in execution
-			success(Bool)                                  - True if message sent
+			user_details(azure_ad.AzureActiveDirectoryUser List)                    - Microsoft Azure Active Directory users
+			raw_json(JSON)                                 - RawJson as returned by graph API. Will be returned if enable_raw_json is true
+			task_success(Bool)                             - False if any part of task fails
+			status_msg(String)                             - Task execution status message
+			response_code(Integer)                         - Response code of the api response
 
-	3. createTeam
-		Create a new Team with specified users and owners.
+	3. update_users
+		Update user details in the Azure AD
 		input -
-			teamDisplayName(String)                        - teamDisplayName of team to create
-			mailNickname(String)                           - mailNickname is an unique identifier for a group or a user, and it is used when creating or updating groups and users using Azure AD Graph API.It has to be unique within the container or organizational unit where the group or user is located
-			description(String)                            - description of team to create
-			members(String List)                           - a list of the mailNickname's of users to add as members
-			owners(String List)                            - a list of the mailNickname's of users to add as owners
+			unique_id(String List)                         - The unique identifier for the user.Accept valid UUID only
+			parameters(JSON)                               - Other params to update as a json body. e.g. {'city': 'xyz', 'country': 'IND'}
 		output -
-			statusMsg(String)                              - Status of the plug-in execution
-			success(Bool)                                  - True if team created
-			team_id(String)                                - id of the team created
+			updated_users(String List)                     - Updated users list
+			task_success(Bool)                             - False if any part of task fails
+			status_msg(String)                             - Task execution status message
+			response_code(Integer)                         - Response code of the api response
 
-	4. createChannel
-		Create a new channel for a team
+	4. enable_users
+		Enable user in the organization.
 		input -
-			teamDisplayName(String)                        - displayName of team to create a channel for
-			channelDisplayName(String)                     - displayName of the channel to create
-			description(String)                            - description of channel to create
+			unique_id(String List)                         - The unique identifier for the user.Accept valid UUID only
 		output -
-			statusMsg(String)                              - Status of the plug-in execution
-			success(Bool)                                  - True if channel created
-			channel_id(String)                             - channel_id of the channel created
+			enabled_users(String List)                     - Enabled users list
+			task_success(Bool)                             - False if any part of task fails
+			status_msg(String)                             - Task execution status message
+			response_code(Integer)                         - Response code of the api response
 
-	5. deleteTeam
-		Delete a Team.O365 group is deleted but team must be manually deleted
+	5. disable_users
+		Disable users in the organization.
 		input -
-			teamDisplayName(String)                        - teamDisplayName of team to delete
+			unique_id(String List)                         - The unique identifier for the user.Accept valid UUID only.
 		output -
-			statusMsg(String)                              - Status of the plug-in execution
-			success(Bool)                                  - True if team deleted
-
-	6. deleteChannel
-		Delete a Channel for a team
-		input -
-			teamDisplayName(String)                        - displayName of team that has a channel to delete
-			channelDisplayName(String)                     - displayName of channel to delete
-		output -
-			statusMsg(String)                              - Status of the plug-in execution
-			success(Bool)                                  - True if channel deleted
-
-	7. watchChannelAdapter
-		Watch the channel and looks for a custom command prefix in the new messages.
-		input -
-			teamDisplayName(String)                        - displayName for the team that has a channel to watch
-			channelDisplayName(String)                     - displayName for the channel to watch
-			commandPrefix(String)                          - The required prefix to a command.  E.g. !FSO command <IP>  the commandPrefix here would be !FSO
-		output -
-			statusMsg(String)                              - Status of the plug-in execution
-			success(Bool)                                  - True if watchChannelAdapter succesful
-			MicrosoftTeamsChatMessage(microsoft_MicrosoftTeamsChatMessage)          - MicrosoftTeamsChatMessage that had a detected command prefix
-			CommandAndParameters(microsoft_CommandAndParameters)                    - Json command and paramenters detected in a MicrosoftTeamsChatMessage
-			teamDisplayName(String)                        - teamDisplayName that had a detected command prefix
-			channelDisplayName(String)                     - channelDisplayName that had a detected command prefix
+			disabled_users(String List)                    - Disabled users list
+			task_success(Bool)                             - False if any part of task fails
+			status_msg(String)                             - Task execution status message
+			response_code(Integer)                         - Response code of the api response
