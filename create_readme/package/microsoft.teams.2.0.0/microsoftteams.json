@@ -1,0 +1,732 @@
+{
+  "base_commands": [
+    {
+      "description": "Send a message to a channel",
+      "input_parameters": [
+        [
+          "teamDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "teamDisplayName",
+            "properties": {
+              "description": "displayName for the team to send a message to"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "channelDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "channelDisplayName",
+            "properties": {
+              "description": "displayName for the channel to send a message to"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "message",
+          {
+            "class": "ParameterDef",
+            "name": "message",
+            "properties": {
+              "description": "message to send to the channel"
+            },
+            "type": "String"
+          }
+        ]
+      ],
+      "manual_time": 120,
+      "name": "sendMessage",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "statusMsg",
+          "properties": {
+            "description": "Status of the plug-in execution",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "success",
+          "properties": {
+            "description": "True if message sent",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Send",
+        "object": "Message"
+      }
+    },
+    {
+      "description": "Reply to a message in a channel",
+      "input_parameters": [
+        [
+          "teamDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "teamDisplayName",
+            "properties": {
+              "description": "displayName for the team to reply to a message"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "channelDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "channelDisplayName",
+            "properties": {
+              "description": "displayName for the channel to reply a message"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "messageid",
+          {
+            "class": "ParameterDef",
+            "name": "messageid",
+            "properties": {
+              "description": "id of the message to reply to (watchChannelAdapter provides in output)"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "message",
+          {
+            "class": "ParameterDef",
+            "name": "message",
+            "properties": {
+              "description": "message to reply with"
+            },
+            "type": "String"
+          }
+        ]
+      ],
+      "manual_time": 120,
+      "name": "replyMessage",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "statusMsg",
+          "properties": {
+            "description": "Status of the plug-in execution",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "success",
+          "properties": {
+            "description": "True if message sent",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Reply",
+        "object": "Message"
+      }
+    },
+    {
+      "description": "Create a new Team with specified users and owners.",
+      "input_parameters": [
+        [
+          "teamDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "teamDisplayName",
+            "properties": {
+              "description": "teamDisplayName of team to create"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "mailNickname",
+          {
+            "class": "ParameterDef",
+            "name": "mailNickname",
+            "properties": {
+              "description": "mailNickname is an unique identifier for a group or a user, and it is used when creating or updating groups and users using Azure AD Graph API.It has to be unique within the container or organizational unit where the group or user is located"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "description",
+          {
+            "class": "ParameterDef",
+            "name": "description",
+            "properties": {
+              "description": "description of team to create",
+              "optional": true
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "members",
+          {
+            "class": "ParameterDef",
+            "list": true,
+            "name": "members",
+            "properties": {
+              "description": "a list of the mailNickname's of users to add as members"
+            },
+            "type": "String List"
+          }
+        ],
+        [
+          "owners",
+          {
+            "class": "ParameterDef",
+            "list": true,
+            "name": "owners",
+            "properties": {
+              "description": "a list of the mailNickname's of users to add as owners"
+            },
+            "type": "String List"
+          }
+        ]
+      ],
+      "manual_time": 120,
+      "name": "createTeam",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "statusMsg",
+          "properties": {
+            "description": "Status of the plug-in execution",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "success",
+          "properties": {
+            "description": "True if team created",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "team_id",
+          "properties": {
+            "description": "id of the team created",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "String"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Create",
+        "object": "Team"
+      }
+    },
+    {
+      "description": "Create a new channel for a team",
+      "input_parameters": [
+        [
+          "teamDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "teamDisplayName",
+            "properties": {
+              "description": "displayName of team to create a channel for"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "channelDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "channelDisplayName",
+            "properties": {
+              "description": "displayName of the channel to create"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "description",
+          {
+            "class": "ParameterDef",
+            "name": "description",
+            "properties": {
+              "description": "description of channel to create",
+              "optional": true
+            },
+            "type": "String"
+          }
+        ]
+      ],
+      "manual_time": 120,
+      "name": "createChannel",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "statusMsg",
+          "properties": {
+            "description": "Status of the plug-in execution",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "success",
+          "properties": {
+            "description": "True if channel created",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "channel_id",
+          "properties": {
+            "description": "channel_id of the channel created",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "String"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Create",
+        "object": "Channel"
+      }
+    },
+    {
+      "description": "Delete a Team.O365 group is deleted but team must be manually deleted",
+      "input_parameters": [
+        [
+          "teamDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "teamDisplayName",
+            "properties": {
+              "description": "teamDisplayName of team to delete"
+            },
+            "type": "String"
+          }
+        ]
+      ],
+      "manual_time": 120,
+      "name": "deleteTeam",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "statusMsg",
+          "properties": {
+            "description": "Status of the plug-in execution",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "success",
+          "properties": {
+            "description": "True if team deleted",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Delete",
+        "object": "Team"
+      }
+    },
+    {
+      "description": "Delete a Channel for a team",
+      "input_parameters": [
+        [
+          "teamDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "teamDisplayName",
+            "properties": {
+              "description": "displayName of team that has a channel to delete"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "channelDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "channelDisplayName",
+            "properties": {
+              "description": "displayName of channel to delete"
+            },
+            "type": "String"
+          }
+        ]
+      ],
+      "manual_time": 120,
+      "name": "deleteChannel",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "statusMsg",
+          "properties": {
+            "description": "Status of the plug-in execution",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "success",
+          "properties": {
+            "description": "True if channel deleted",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Delete",
+        "object": "Channel"
+      }
+    },
+    {
+      "adapter_types": [
+        "ANY"
+      ],
+      "description": "Watch the channel and looks for a custom command prefix in the new messages.",
+      "input_parameters": [
+        [
+          "teamDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "teamDisplayName",
+            "properties": {
+              "description": "displayName for the team that has a channel to watch"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "channelDisplayName",
+          {
+            "class": "ParameterDef",
+            "name": "channelDisplayName",
+            "properties": {
+              "description": "displayName for the channel to watch"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "commandPrefix",
+          {
+            "class": "ParameterDef",
+            "name": "commandPrefix",
+            "properties": {
+              "description": "The required prefix to a command.  E.g. !FSO command <IP>  the commandPrefix here would be !FSO"
+            },
+            "type": "String"
+          }
+        ]
+      ],
+      "manual_time": 120,
+      "name": "watchChannelAdapter",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "statusMsg",
+          "properties": {
+            "description": "Status of the plug-in execution",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "success",
+          "properties": {
+            "description": "True if watchChannelAdapter succesful",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "MicrosoftTeamsChatMessage",
+          "properties": {
+            "description": "MicrosoftTeamsChatMessage that had a detected command prefix",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "microsoft_teams.MicrosoftTeamsChatMessage"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "CommandAndParameters",
+          "properties": {
+            "description": "Json command and paramenters detected in a MicrosoftTeamsChatMessage",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "microsoft_teams.CommandAndParameters"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "teamDisplayName",
+          "properties": {
+            "description": "teamDisplayName that had a detected command prefix",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "channelDisplayName",
+          "properties": {
+            "description": "channelDisplayName that had a detected command prefix",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "String"
+        }
+      ],
+      "tags": [
+        [
+          "Ingest"
+        ]
+      ],
+      "taxonomy": {
+        "action": "Watch",
+        "object": "Channel"
+      }
+    }
+  ],
+  "class_name": "MicrosoftTeams",
+  "description": "Microsoft Teams is a unified communications platform that combines persistent workplace chat, video meetings, file storage (including collaboration on files), and application integration.This plugin integrates with Microsoft Teams using the Microsoft graph REST API.",
+  "file": "microsoft_teams.py",
+  "icon": "microsoft_teams.png",
+  "name": "Microsoft Teams",
+  "parameters": [
+    [
+      "client_id",
+      {
+        "class": "ParameterDef",
+        "name": "client_id",
+        "properties": {
+          "description": "The unique identifier of the application registered at Azure Active Directory."
+        },
+        "type": "String"
+      }
+    ],
+    [
+      "client_secret",
+      {
+        "class": "ParameterDef",
+        "name": "client_secret",
+        "properties": {
+          "description": "Client Secret of the application registered at Azure Active Directory.",
+          "encrypted": true
+        },
+        "type": "String"
+      }
+    ],
+    [
+      "tenant_id",
+      {
+        "class": "ParameterDef",
+        "name": "tenant_id",
+        "properties": {
+          "description": "The unique identifier of the Azure Active Directory"
+        },
+        "type": "String"
+      }
+    ],
+    [
+      "graph_api_version",
+      {
+        "class": "ParameterDef",
+        "name": "graph_api_version",
+        "properties": {
+          "choices": [
+            {
+              "label": "v1.0",
+              "value": "v1.0"
+            },
+            {
+              "label": "beta",
+              "value": "beta"
+            }
+          ],
+          "description": "Microsoft graph API version. e.g v1.0, beta"
+        },
+        "type": "String"
+      }
+    ],
+    [
+      "verify_certs",
+      {
+        "class": "ParameterDef",
+        "name": "verify_certs",
+        "properties": {
+          "default": {
+            "type": "Bool",
+            "value": true
+          },
+          "description": "Should the TLS certificates be verified",
+          "optional": true
+        },
+        "type": "Bool"
+      }
+    ],
+    [
+      "timeout",
+      {
+        "class": "ParameterDef",
+        "name": "timeout",
+        "properties": {
+          "default": {
+            "type": "Integer",
+            "value": 120
+          },
+          "description": "request timeout",
+          "optional": true
+        },
+        "type": "Integer"
+      }
+    ],
+    [
+      "code",
+      {
+        "class": "ParameterDef",
+        "name": "code",
+        "properties": {
+          "description": "The authorization_code that the app requested. The app can use the authorization code to request an access token for the target resource.This is required for first API call to generate access_token.Later we store refresh_token to generate new access_token",
+          "optional": true
+        },
+        "type": "String"
+      }
+    ],
+    [
+      "redirect_uri",
+      {
+        "class": "ParameterDef",
+        "name": "redirect_uri",
+        "properties": {
+          "default": {
+            "type": "String",
+            "value": "https://login.microsoftonline.com/common/oauth2/nativeclient"
+          },
+          "description": "The redirect_uri of your app, where authentication responses can be sent and received by your app. It must exactly match one of the redirect URIs you registered in the portal, except it must be URL-encoded.If you don't use default value please update redirect_uri in url while generating code in browser",
+          "optional": true
+        },
+        "type": "String"
+      }
+    ],
+    [
+      "proxyProtocol",
+      {
+        "class": "ParameterDef",
+        "name": "proxyProtocol",
+        "properties": {
+          "choices": [
+            {
+              "label": "HTTP",
+              "value": "http"
+            },
+            {
+              "label": "HTTPS",
+              "value": "https"
+            },
+            {
+              "label": "SOCKS",
+              "value": "socks"
+            }
+          ],
+          "description": "Proxy protocol",
+          "optional": true
+        },
+        "type": "String"
+      }
+    ],
+    [
+      "proxyHost",
+      {
+        "class": "ParameterDef",
+        "name": "proxyHost",
+        "properties": {
+          "description": "Proxy Hostname or IP Address",
+          "optional": true
+        },
+        "type": "HostName | IPAddress"
+      }
+    ],
+    [
+      "proxyPort",
+      {
+        "class": "ParameterDef",
+        "name": "proxyPort",
+        "properties": {
+          "description": "Proxy Port",
+          "optional": true
+        },
+        "type": "Integer"
+      }
+    ],
+    [
+      "proxyUser",
+      {
+        "class": "ParameterDef",
+        "name": "proxyUser",
+        "properties": {
+          "description": "Proxy User",
+          "optional": true
+        },
+        "type": "String"
+      }
+    ],
+    [
+      "proxyPassword",
+      {
+        "class": "ParameterDef",
+        "name": "proxyPassword",
+        "properties": {
+          "description": "Proxy User Password",
+          "encrypted": true,
+          "optional": true
+        },
+        "type": "String"
+      }
+    ]
+  ],
+  "tags": [
+    "Messaging"
+  ],
+  "vendor": "Microsoft",
+  "version": "2.0.0"
+}
