@@ -12,3 +12,4 @@ saas_plugins_path="/Users/prabhat.ranjan/Desktop/Projects/xdr-soarcontent-iso-pl
 plugins_tar_path="/Users/prabhat.ranjan/Desktop/Projects/saas_plugins_tar" #folder store tar package of plugin in local
 plugins_schema_path="/Users/prabhat.ranjan/Desktop/Projects/plugins_schema"
 fso_system_path="/Users/prabhat.ranjan/Desktop/Projects/xdr-soar-fso-system"
+ui_code_path="/Users/prabhat.ranjan/Desktop/Projects/xdr-task-central-ui"

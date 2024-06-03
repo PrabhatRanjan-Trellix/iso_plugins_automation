@@ -1,72 +1,66 @@
 Plugin Parameters :
 
-	client_id(String)                                - The unique identifier of the application registered at Azure Active Directory.Accept valid UUID only
-	client_secret(String)                            - Client Secret of the application registered at Azure Active Directory.
-	azure_active_directory_id(String)                - The unique identifier of the Azure Active Directory.(AAD > Properties > Directory ID).Accept valid UUID only
-	graph_api_version(String)                        - Microsoft graph API version. e.g v1.0, beta
-	scope(String)                                    - The value passed for the scope parameter in this request should be the resource identifier (Application ID URI) of the resource you want, affixed with the .default suffix. For Microsoft Graph, the value is https://graph.microsoft.com/.default. This value informs the Microsoft identity platform endpoint that of all the application permissions you have configured for your app, it should issue a token for the ones associated with the resource you want to use.
+	url(String)                                      - URL of cloud Email Security Server, example: https://etp.us.fireeye.com. Accept valid URL only
+	api_key(String)                                  - ETP API key
 
 Commands :
 
-	1. get_users
-		Get users in the organization.
+	1. retrieve_message
+		Retrieves the particular message with the specified Email Security message ID.
 		input -
-			name(String List)                              - The display name of the user.
-			email(String List)                             - The user's email address.Accept valid emails only
-			enable_raw_json(Bool)                          - Enable Raw Json output? If True, will additionally give rawJson returned by Microsoft graph API
+			message_id(String List)                        - The ID of the Email Security message.
+			traffic_type(String)                           - The direction of the email traffic.Accepted value are (inbound, outbound)
 		output -
-			user_details(azure_ad.AzureActiveDirectoryUser List)                    - Microsoft Azure Active Directory users
-			raw_json(JSON)                                 - RawJson as returned by graph API. Will be returned if enable_raw_json is true
+			etp_email(email_security.ETPEmail List)        - User ComplexType of Email Security Message Trace
+			raw_json(JSON)                                 - Email Security Message Trace Raw Response
+			retrieved_message_ids(String List)             - List of message id, for which message retrieved
 			task_success(Bool)                             - False if any part of task fails
 			status_msg(String)                             - Task execution status message
 			response_code(Integer)                         - Response code of the api response
 
-	2. get_users_advance
-		Get users in the organization.
+	2. email_search
+		Retrieves email trace information as per the attributes and traffic type that are accessible in the Email Security.Each input parameters can have max of 10 values
 		input -
-			id(String List)                                - The unique identifier for the user. If unique identifier is given, other search parameters will be ignored.Accept valid UUID only
-			name(String List)                              - The display name of the user
-			given_name(String List)                        - The first name of the user.
-			job_title(String List)                         - The user's job title.
-			email(String List)                             - The user's email address.accept valid email.Accept valid email only
-			surname(String List)                           - The last name of the user.
-			user_principal_name(String List)               - The user's principal name.
-			enable_raw_json(Bool)                          - Enable Raw Json output? If True, will additionally give rawJson returned by Microsoft graph API
-			properties(String)                             - Properties to be selected as a comma separated string
+			from_email(String List)                        - List of senders email.Accept valid emails only
+			recipients(String List)                        - List of recipients.Accept valid emails only
+			subject(String)                                - The subject of email
+			from_time(String)                              - Timestamp search start. Please provide time in ISO8601 format. (eg. '2024-01-02T15:04:05.000z').Both 'from_time' and 'to_time' are required fields to specify the datetime range for the search.
+			to_time(String)                                - Timestamp search stop. Please provide time in ISO8601 format. (eg. 2024-01-02T15:04:05.000z).Both 'from_time' and 'to_time' are required fields to specify the datetime range for the search. If 'from_time' is provided but 'to_time' is not, the current datetime will be used as the to_time time.
+			status(String)                                 - email status. Accepted values are: (accepted, deleted, delivered, delivered (retroactive), dropped, dropped oob, dropped (oob retroactive), permanent failure, processing, quarantined, rejected, temporary failure, scanned, scan bypassed, split)
+			has_attachment(Bool)                           - Mark true if email contains attachment
+			min_message_size(Float)                        - Minimum size of the email.Accept positive float only
+			max_message_size(Float)                        - Maximum size of the email.Accept positive float only
+			sender_ip(String List)                         - List of sending SMTP IPs.Accept valid ip_addresses only
+			domains(String List)                           - List of domains. Accept valid domains only
+			limit(Integer)                                 - Max number of emails to return.Default is 20.Accept positive integer only
 		output -
-			user_details(azure_ad.AzureActiveDirectoryUser List)                    - Microsoft Azure Active Directory users
-			raw_json(JSON)                                 - RawJson as returned by graph API. Will be returned if enable_raw_json is true
+			etp_email(email_security.ETPEmail)             - User ComplexType of Email Security Email Trace
+			raw_json(JSON)                                 - Email Security Email Trace Raw Response
 			task_success(Bool)                             - False if any part of task fails
 			status_msg(String)                             - Task execution status message
 			response_code(Integer)                         - Response code of the api response
 
-	3. update_users
-		Update user details in the Azure AD
+	3. message_remediate
+		Remediates messages in ETP by specified Message IDs
 		input -
-			unique_id(String List)                         - The unique identifier for the user.Accept valid UUID only
-			parameters(JSON)                               - Other params to update as a json body. e.g. {'city': 'xyz', 'country': 'IND'}
+			message_id(String List)                        - The ID of the Email Security message.
+			action(String)                                 - The action to take on the message IDs, accepted values are (quarantine, move, delete). If action selected as move, then move_to is required parameter
+			move_to(String)                                - The folder to move message to in the users inbox.If action selected as move, then move_to is required parameter
 		output -
-			updated_users(String List)                     - Updated users list
+			remediate_response(email_security.ETPMessageRemediate)                  - User ComplexType of Email Security Message Remediate
+			remediated_message_ids(String List)            - List of message IDs for emails that have been remediated
+			raw_json(JSON)                                 - Email Security Message Remediate Raw Response
 			task_success(Bool)                             - False if any part of task fails
 			status_msg(String)                             - Task execution status message
 			response_code(Integer)                         - Response code of the api response
 
-	4. enable_users
-		Enable user in the organization.
+	4. url_click_report
+		Retrieves URL click reports
 		input -
-			unique_id(String List)                         - The unique identifier for the user.Accept valid UUID only
+			alert_id(String)                               - The ID of the Advance threat alert
 		output -
-			enabled_users(String List)                     - Enabled users list
-			task_success(Bool)                             - False if any part of task fails
-			status_msg(String)                             - Task execution status message
-			response_code(Integer)                         - Response code of the api response
-
-	5. disable_users
-		Disable users in the organization.
-		input -
-			unique_id(String List)                         - The unique identifier for the user.Accept valid UUID only.
-		output -
-			disabled_users(String List)                    - Disabled users list
+			url_click_report(email_security.ETPUrlClickReport)                      - User ComplexType of Email Security URL Click Report
+			raw_json(JSON)                                 - URL click report Raw Response
 			task_success(Bool)                             - False if any part of task fails
 			status_msg(String)                             - Task execution status message
 			response_code(Integer)                         - Response code of the api response

@@ -1,3 +1,11 @@
-source $iso_plugins_automation/config/config.sh
+source "$iso_plugins_automation/config/config.sh"
 
-ssh $user@$remote_ip 'systemctl restart fso && systemctl restart fso-web'
+docker start rabbitmq
+# start httpd server
+docker exec -d "${docker_container}" bash -c "httpd -D FOREGROUND"
+
+cd $ui_code_path && yarn start &
+
+# Run the fso api server
+docker exec -it "${docker_container}" bash -c "\
+    sh /vagrant/setup/dev_init.sh"
