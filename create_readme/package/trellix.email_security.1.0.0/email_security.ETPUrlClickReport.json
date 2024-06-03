@@ -1,0 +1,131 @@
+[
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "response from ETP URL Click Report",
+    "base": null,
+    "fields": [
+      [
+        "data",
+        {
+          "class": "ParameterDef",
+          "name": "data",
+          "properties": {
+            "description": "Data"
+          },
+          "type": "email_security.ETPUrlClickReport.Data"
+        }
+      ],
+      [
+        "meta",
+        {
+          "class": "ParameterDef",
+          "name": "meta",
+          "properties": {
+            "description": "Meta"
+          },
+          "type": "email_security.ETPUrlClickReport.Meta"
+        }
+      ],
+      [
+        "type",
+        {
+          "class": "ParameterDef",
+          "name": "type",
+          "properties": {
+            "description": "type"
+          },
+          "type": "String"
+        }
+      ]
+    ],
+    "id": "email_security/ETPUrlClickReport",
+    "name": "email_security.ETPUrlClickReport",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "sha256",
+        {
+          "class": "ParameterDef",
+          "name": "sha256",
+          "properties": {
+            "description": "sha256"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "url",
+        {
+          "class": "ParameterDef",
+          "name": "url",
+          "properties": {
+            "description": "url"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "url_click_missed",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "url_click_missed",
+          "properties": {
+            "description": "url_click_missed"
+          },
+          "type": "Integer List"
+        }
+      ],
+      [
+        "url_click_blocked",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "url_click_blocked",
+          "properties": {
+            "description": "url_click_blocked"
+          },
+          "type": "Integer List"
+        }
+      ]
+    ],
+    "id": "email_security/Data",
+    "name": "email_security.ETPUrlClickReport.Data",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "copyright",
+        {
+          "class": "ParameterDef",
+          "name": "copyright",
+          "properties": {
+            "description": "copyright"
+          },
+          "type": "String"
+        }
+      ]
+    ],
+    "id": "email_security/Meta",
+    "name": "email_security.ETPUrlClickReport.Meta",
+    "native_type": "complex"
+  }
+]

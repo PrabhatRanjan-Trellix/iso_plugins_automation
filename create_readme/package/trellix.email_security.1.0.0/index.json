@@ -1,0 +1,25 @@
+{
+  "content": {
+    "files": [
+      "trellix.png"
+    ],
+    "plugins": [
+      "trellixetp"
+    ],
+    "types": [
+      "email_security.ETPEmail",
+      "email_security.ETPMessageRemediate",
+      "email_security.ETPUrlClickReport"
+    ]
+  },
+  "created_date": "2024-06-03T02:57:23+0000",
+  "description": "\nThe Email Security - Cloud Edition platform provides real-time, dynamic threat protection without the use of signatures to protect an organization across the primary threat vectors,\nincluding Web, email, and files, and across the different stages of an attack life cycle. It incorporates an end-user portal that allows quarantine management, as well as review of malicious email and statistics.\nThis Security Orchestrator plugin enables the retrieval of alerts and message traces based on Message ID.\n",
+  "hash": {
+    "email_security.py": "be7c6549286692ed5e65d109146bc97016387eeaa1ace5eddad19a8a4202b070",
+    "trellix.png": "4e5c33923c03b129efef05f9f08894e5f70382b8c2f9dc1608eb63bc66ea92a9"
+  },
+  "name": "email_security",
+  "package-api": "4.0",
+  "vendor": "trellix",
+  "version": "1.0.0"
+}

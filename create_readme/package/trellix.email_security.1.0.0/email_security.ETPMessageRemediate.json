@@ -1,0 +1,146 @@
+[
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "response from ETP Message Remediate",
+    "base": null,
+    "fields": [
+      [
+        "data",
+        {
+          "class": "ParameterDef",
+          "name": "data",
+          "properties": {
+            "description": "Data"
+          },
+          "type": "email_security.ETPMessageRemediate.Data"
+        }
+      ],
+      [
+        "meta",
+        {
+          "class": "ParameterDef",
+          "name": "meta",
+          "properties": {
+            "description": "Meta"
+          },
+          "type": "email_security.ETPMessageRemediate.Meta"
+        }
+      ]
+    ],
+    "id": "email_security/ETPMessageRemediate",
+    "name": "email_security.ETPMessageRemediate",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "successful",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "successful",
+          "properties": {
+            "description": "successful"
+          },
+          "type": "String List"
+        }
+      ],
+      [
+        "failed",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "failed",
+          "properties": {
+            "description": "failed"
+          },
+          "type": "String List"
+        }
+      ],
+      [
+        "failureReasons",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "failureReasons",
+          "properties": {
+            "description": "failure_reasons"
+          },
+          "type": "email_security.ETPMessageRemediate.Data.FailureReasons List"
+        }
+      ]
+    ],
+    "id": "email_security/Data",
+    "name": "email_security.ETPMessageRemediate.Data",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "reason",
+        {
+          "class": "ParameterDef",
+          "name": "reason",
+          "properties": {
+            "description": "reason"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "messageIDs",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "messageIDs",
+          "properties": {
+            "description": "message_ids"
+          },
+          "type": "String List"
+        }
+      ]
+    ],
+    "id": "email_security/FailureReasons",
+    "name": "email_security.ETPMessageRemediate.Data.FailureReasons",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "copyright",
+        {
+          "class": "ParameterDef",
+          "name": "copyright",
+          "properties": {
+            "description": "copyright"
+          },
+          "type": "String"
+        }
+      ]
+    ],
+    "id": "email_security/Meta",
+    "name": "email_security.ETPMessageRemediate.Meta",
+    "native_type": "complex"
+  }
+]

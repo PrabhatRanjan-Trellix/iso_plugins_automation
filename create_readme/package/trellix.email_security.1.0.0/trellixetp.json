@@ -1,0 +1,640 @@
+{
+  "base_commands": [
+    {
+      "description": "Retrieves the particular message with the specified Email Security message ID.",
+      "input_parameters": [
+        [
+          "message_id",
+          {
+            "class": "ParameterDef",
+            "list": true,
+            "name": "message_id",
+            "properties": {
+              "description": "The ID of the Email Security message."
+            },
+            "type": "String List"
+          }
+        ],
+        [
+          "traffic_type",
+          {
+            "class": "ParameterDef",
+            "name": "traffic_type",
+            "properties": {
+              "choices": [
+                {
+                  "label": "Inbound",
+                  "value": "inbound"
+                },
+                {
+                  "label": "Outbound",
+                  "value": "outbound"
+                }
+              ],
+              "default": {
+                "type": "String",
+                "value": "inbound"
+              },
+              "description": "The direction of the email traffic.Accepted value are (inbound, outbound)",
+              "optional": true
+            },
+            "type": "String"
+          }
+        ]
+      ],
+      "manual_time": 60,
+      "name": "retrieve_message",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "etp_email",
+          "properties": {
+            "description": "User ComplexType of Email Security Message Trace",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "email_security.ETPEmail List"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "raw_json",
+          "properties": {
+            "description": "Email Security Message Trace Raw Response",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "JSON"
+        },
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "retrieved_message_ids",
+          "properties": {
+            "description": "List of message id, for which message retrieved",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "String List"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "task_success",
+          "properties": {
+            "description": "False if any part of task fails",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "status_msg",
+          "properties": {
+            "description": "Task execution status message",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "response_code",
+          "properties": {
+            "description": "Response code of the api response",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "Integer"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Retrieve",
+        "object": "Message"
+      }
+    },
+    {
+      "description": "Retrieves email trace information as per the attributes and traffic type that are accessible in the Email Security.Each input parameters can have max of 10 values",
+      "input_parameters": [
+        [
+          "from_email",
+          {
+            "class": "ParameterDef",
+            "list": true,
+            "name": "from_email",
+            "properties": {
+              "description": "List of senders email.Accept valid emails only",
+              "optional": true,
+              "regex_pattern": "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\\\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\\\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+            },
+            "type": "String List"
+          }
+        ],
+        [
+          "recipients",
+          {
+            "class": "ParameterDef",
+            "list": true,
+            "name": "recipients",
+            "properties": {
+              "description": "List of recipients.Accept valid emails only",
+              "optional": true,
+              "regex_pattern": "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\\\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\\\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+            },
+            "type": "String List"
+          }
+        ],
+        [
+          "subject",
+          {
+            "class": "ParameterDef",
+            "name": "subject",
+            "properties": {
+              "description": "The subject of email",
+              "optional": true
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "from_time",
+          {
+            "class": "ParameterDef",
+            "name": "from_time",
+            "properties": {
+              "description": "Timestamp search start. Please provide time in ISO8601 format. (eg. '2024-01-02T15:04:05.000z').Both 'from_time' and 'to_time' are required fields to specify the datetime range for the search.",
+              "optional": true,
+              "regex_pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?(Z|[\\+\\-]\\d{2}:\\d{2})?$"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "to_time",
+          {
+            "class": "ParameterDef",
+            "name": "to_time",
+            "properties": {
+              "description": "Timestamp search stop. Please provide time in ISO8601 format. (eg. 2024-01-02T15:04:05.000z).Both 'from_time' and 'to_time' are required fields to specify the datetime range for the search. If 'from_time' is provided but 'to_time' is not, the current datetime will be used as the end time.",
+              "optional": true,
+              "regex_pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?(Z|[\\+\\-]\\d{2}:\\d{2})?$"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "status",
+          {
+            "class": "ParameterDef",
+            "name": "status",
+            "properties": {
+              "choices": [
+                {
+                  "label": "accepted",
+                  "value": "accepted"
+                },
+                {
+                  "label": "deleted",
+                  "value": "deleted"
+                },
+                {
+                  "label": "delivered",
+                  "value": "delivered"
+                },
+                {
+                  "label": "dropped",
+                  "value": "dropped"
+                },
+                {
+                  "label": "temporary_failure",
+                  "value": "temporary failure"
+                },
+                {
+                  "label": "scanned",
+                  "value": "scanned"
+                },
+                {
+                  "label": "scan_bypassed",
+                  "value": "scan bypassed"
+                },
+                {
+                  "label": "split",
+                  "value": "split"
+                },
+                {
+                  "label": "dropped_oob",
+                  "value": "dropped oob"
+                },
+                {
+                  "label": "permanent_failure",
+                  "value": "permanent failure"
+                },
+                {
+                  "label": "processing",
+                  "value": "processing"
+                },
+                {
+                  "label": "quarantined",
+                  "value": "quarantined"
+                },
+                {
+                  "label": "rejected",
+                  "value": "rejected"
+                },
+                {
+                  "label": "delivered_retroactive",
+                  "value": "delivered (retroactive)"
+                },
+                {
+                  "label": "dropped_oob_retroactive",
+                  "value": "dropped (oob retroactive)"
+                }
+              ],
+              "description": "email status. Accepted values are: (accepted, deleted, delivered, delivered (retroactive), dropped, dropped oob, dropped (oob retroactive), permanent failure, processing, quarantined, rejected, temporary failure, scanned, scan bypassed, split)",
+              "optional": true
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "has_attachment",
+          {
+            "class": "ParameterDef",
+            "name": "has_attachment",
+            "properties": {
+              "description": "Mark true if email contains attachment",
+              "optional": true
+            },
+            "type": "Bool"
+          }
+        ],
+        [
+          "min_message_size",
+          {
+            "class": "ParameterDef",
+            "name": "min_message_size",
+            "properties": {
+              "default": {
+                "type": "Float",
+                "value": 0.0
+              },
+              "description": "Minimum size of the email.Accept positive float only",
+              "optional": true,
+              "regex_pattern": "^[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?$"
+            },
+            "type": "Float"
+          }
+        ],
+        [
+          "max_message_size",
+          {
+            "class": "ParameterDef",
+            "name": "max_message_size",
+            "properties": {
+              "description": "Maximum size of the email.Accept positive float only",
+              "optional": true,
+              "regex_pattern": "^[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?$"
+            },
+            "type": "Float"
+          }
+        ],
+        [
+          "sender_ip",
+          {
+            "class": "ParameterDef",
+            "list": true,
+            "name": "sender_ip",
+            "properties": {
+              "description": "List of sending SMTP IPs.Accept valid ip_addresses only",
+              "optional": true,
+              "regex_pattern": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|^([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}$|^([0-9a-fA-F]{1,4}:){1,7}:$|^([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}$|^([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}$|^([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}$|^([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}$|^([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}$|^[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})$|^:((:[0-9a-fA-F]{1,4}){1,7}|:)$"
+            },
+            "type": "String List"
+          }
+        ],
+        [
+          "domains",
+          {
+            "class": "ParameterDef",
+            "list": true,
+            "name": "domains",
+            "properties": {
+              "description": "List of domains. Accept valid domains only",
+              "optional": true,
+              "regex_pattern": "^((?:[a-zA-Z0-9\\.\\-\\_](?:[a-zA-Z0-9\\-\\.\\_]*[a-zA-Z0-9\\-\\.\\_]))(?:\\:[0-9]{1,5})?)$|(?=^.{1,254}$)(^(?:(?!\\d+\\.)[a-zA-Z0-9_\\-]{1,63}\\.?)+(?:[a-zA-Z]{2,})$)"
+            },
+            "type": "String List"
+          }
+        ],
+        [
+          "limit",
+          {
+            "class": "ParameterDef",
+            "name": "limit",
+            "properties": {
+              "default": {
+                "type": "Integer",
+                "value": 20
+              },
+              "description": "Max number of emails to return.Default is 20.Accept positive integer only",
+              "optional": true,
+              "regex_pattern": "^-?(0x)?[0-9A-Fa-f]+$"
+            },
+            "type": "Integer"
+          }
+        ]
+      ],
+      "manual_time": 60,
+      "name": "email_search",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "etp_email",
+          "properties": {
+            "description": "User ComplexType of Email Security Email Trace",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "email_security.ETPEmail"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "raw_json",
+          "properties": {
+            "description": "Email Security Email Trace Raw Response",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "JSON"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "task_success",
+          "properties": {
+            "description": "False if any part of task fails",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "status_msg",
+          "properties": {
+            "description": "Task execution status message",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "response_code",
+          "properties": {
+            "description": "Response code of the api response",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "Integer"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Email",
+        "object": "Search"
+      }
+    },
+    {
+      "description": "Remediates messages in ETP by specified Message IDs",
+      "input_parameters": [
+        [
+          "message_id",
+          {
+            "class": "ParameterDef",
+            "list": true,
+            "name": "message_id",
+            "properties": {
+              "description": "The ID of the Email Security message."
+            },
+            "type": "String List"
+          }
+        ],
+        [
+          "action",
+          {
+            "class": "ParameterDef",
+            "name": "action",
+            "properties": {
+              "choices": [
+                {
+                  "label": "Quarantine",
+                  "value": "quarantine"
+                },
+                {
+                  "label": "Move",
+                  "value": "move"
+                },
+                {
+                  "label": "Delete",
+                  "value": "delete"
+                }
+              ],
+              "default": {
+                "type": "String",
+                "value": "quarantine"
+              },
+              "description": "The action to take on the message IDs, accepted values are (quarantine, move, delete). If action selected as move, then move_to is required parameter"
+            },
+            "type": "String"
+          }
+        ],
+        [
+          "move_to",
+          {
+            "class": "ParameterDef",
+            "name": "move_to",
+            "properties": {
+              "description": "The folder to move message to in the users inbox.If action selected as move, then move_to is required parameter",
+              "optional": true
+            },
+            "type": "String"
+          }
+        ]
+      ],
+      "manual_time": 60,
+      "name": "message_remediate",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "remediate_response",
+          "properties": {
+            "description": "User ComplexType of Email Security Message Remediate",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "email_security.ETPMessageRemediate"
+        },
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "remediated_message_ids",
+          "properties": {
+            "description": "List of message IDs for emails that have been remediated",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "String List"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "raw_json",
+          "properties": {
+            "description": "Email Security Message Remediate Raw Response",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "JSON"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "task_success",
+          "properties": {
+            "description": "False if any part of task fails",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "status_msg",
+          "properties": {
+            "description": "Task execution status message",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "response_code",
+          "properties": {
+            "description": "Response code of the api response",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "Integer"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Message",
+        "object": "Remediate"
+      }
+    },
+    {
+      "description": "Retrieves URL click reports",
+      "input_parameters": [
+        [
+          "alert_id",
+          {
+            "class": "ParameterDef",
+            "name": "alert_id",
+            "properties": {
+              "description": "The ID of the Advance threat alert"
+            },
+            "type": "String"
+          }
+        ]
+      ],
+      "manual_time": 60,
+      "name": "url_click_report",
+      "output_parameters": [
+        {
+          "class": "ParameterDef",
+          "name": "url_click_report",
+          "properties": {
+            "description": "User ComplexType of Email Security URL Click Report",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "email_security.ETPUrlClickReport"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "raw_json",
+          "properties": {
+            "description": "URL click report Raw Response",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "JSON"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "task_success",
+          "properties": {
+            "description": "False if any part of task fails",
+            "indicator": "task"
+          },
+          "type": "Bool"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "status_msg",
+          "properties": {
+            "description": "Task execution status message",
+            "indicator": "task"
+          },
+          "type": "String"
+        },
+        {
+          "class": "ParameterDef",
+          "name": "response_code",
+          "properties": {
+            "description": "Response code of the api response",
+            "indicator": "task",
+            "optional": true
+          },
+          "type": "Integer"
+        }
+      ],
+      "tags": [],
+      "taxonomy": {
+        "action": "Get",
+        "object": "UrlClickReport"
+      }
+    }
+  ],
+  "class_name": "TrellixETP",
+  "description": "\nThe Email Security - Cloud Edition platform provides real-time, dynamic threat protection without the use of signatures to protect an organization across the primary threat vectors,\nincluding Web, email, and files, and across the different stages of an attack life cycle. It incorporates an end-user portal that allows quarantine management, as well as review of malicious email and statistics.\nThis Security Orchestrator plugin enables the retrieval of alerts and message traces based on Message ID.\n",
+  "file": "email_security.py",
+  "icon": "trellix.png",
+  "name": "Email Security - Cloud Edition",
+  "parameters": [
+    [
+      "url",
+      {
+        "class": "ParameterDef",
+        "name": "url",
+        "properties": {
+          "description": "URL of cloud Email Security Server, example: https://etp.us.fireeye.com. Accept valid URL only",
+          "regex_pattern": "((?:(?:(?:https?|ftp|file))://)[-A-Za-z0-9+&@#/%?=~_|!:,.;\\(\\)]+[-A-Za-z0-9+&@#/%=~_|])|(((http|ftp|https):\\/{2})+(([0-9a-z_-]+\\.)+(aero|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mn|mn|mo|mp|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|nom|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ra|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw|arpa)(:[0-9]+)?((\\/([~0-9a-zA-Z\\#\\+\\%@\\.\\/_-]+))?(\\?[0-9a-zA-Z\\+\\%@\\/&\\[\\];=_-]+)?)?))\\b"
+        },
+        "type": "String"
+      }
+    ],
+    [
+      "api_key",
+      {
+        "class": "ParameterDef",
+        "name": "api_key",
+        "properties": {
+          "description": "ETP API key",
+          "encrypted": true
+        },
+        "type": "String"
+      }
+    ]
+  ],
+  "tags": [
+    "Threat Intelligence"
+  ],
+  "vendor": "Trellix",
+  "version": "1.0.0"
+}

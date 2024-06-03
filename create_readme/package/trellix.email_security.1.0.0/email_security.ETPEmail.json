@@ -1,0 +1,507 @@
+[
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "response from ETP Message Trace",
+    "base": null,
+    "fields": [
+      [
+        "data",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "data",
+          "properties": {
+            "description": "Data"
+          },
+          "type": "email_security.ETPEmail.Data List"
+        }
+      ],
+      [
+        "meta",
+        {
+          "class": "ParameterDef",
+          "name": "meta",
+          "properties": {
+            "description": "Meta"
+          },
+          "type": "email_security.ETPEmail.Meta"
+        }
+      ]
+    ],
+    "id": "email_security/ETPEmail",
+    "name": "email_security.ETPEmail",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "attributes",
+        {
+          "class": "ParameterDef",
+          "name": "attributes",
+          "properties": {
+            "description": "Attributes"
+          },
+          "type": "email_security.ETPEmail.Data.Attributes"
+        }
+      ],
+      [
+        "id",
+        {
+          "class": "ParameterDef",
+          "name": "id",
+          "properties": {
+            "description": "id"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "type",
+        {
+          "class": "ParameterDef",
+          "name": "type",
+          "properties": {
+            "description": "type"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "customer_id",
+        {
+          "class": "ParameterDef",
+          "name": "customer_id",
+          "properties": {
+            "description": "customer_id"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "included",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "included",
+          "properties": {
+            "description": "included"
+          },
+          "type": "email_security.ETPEmail.Data.Included List"
+        }
+      ]
+    ],
+    "id": "email_security/Data",
+    "name": "email_security.ETPEmail.Data",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "acceptedDateTime",
+        {
+          "class": "ParameterDef",
+          "name": "acceptedDateTime",
+          "properties": {
+            "description": "acceptedDateTime"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "countryCode",
+        {
+          "class": "ParameterDef",
+          "name": "countryCode",
+          "properties": {
+            "description": "countryCode"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "domain",
+        {
+          "class": "ParameterDef",
+          "name": "domain",
+          "properties": {
+            "description": "domain"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "downStreamMsgID",
+        {
+          "class": "ParameterDef",
+          "name": "downStreamMsgID",
+          "properties": {
+            "description": "downStreamMsgID"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "emailSize",
+        {
+          "class": "ParameterDef",
+          "name": "emailSize",
+          "properties": {
+            "description": "emailSize"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "lastModifiedDateTime",
+        {
+          "class": "ParameterDef",
+          "name": "lastModifiedDateTime",
+          "properties": {
+            "description": "lastModifiedDateTime"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "originalMessageID",
+        {
+          "class": "ParameterDef",
+          "name": "originalMessageID",
+          "properties": {
+            "description": "originalMessageID"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "recipientHeader",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "recipientHeader",
+          "properties": {
+            "description": "recipientHeader"
+          },
+          "type": "String List"
+        }
+      ],
+      [
+        "recipientSMTP",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "recipientSMTP",
+          "properties": {
+            "description": "recipientSMTP"
+          },
+          "type": "String List"
+        }
+      ],
+      [
+        "senderHeader",
+        {
+          "class": "ParameterDef",
+          "name": "senderHeader",
+          "properties": {
+            "description": "senderHeader"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "senderSMTP",
+        {
+          "class": "ParameterDef",
+          "name": "senderSMTP",
+          "properties": {
+            "description": "senderSMTP"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "senderIP",
+        {
+          "class": "ParameterDef",
+          "name": "senderIP",
+          "properties": {
+            "description": "senderIP"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "status",
+        {
+          "class": "ParameterDef",
+          "name": "status",
+          "properties": {
+            "description": "status"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "subject",
+        {
+          "class": "ParameterDef",
+          "name": "subject",
+          "properties": {
+            "description": "subject"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "urlDomains",
+        {
+          "class": "ParameterDef",
+          "list": true,
+          "name": "urlDomains",
+          "properties": {
+            "description": "urlDomains"
+          },
+          "type": "String List"
+        }
+      ],
+      [
+        "verdicts",
+        {
+          "class": "ParameterDef",
+          "name": "verdicts",
+          "properties": {
+            "description": "Verdicts"
+          },
+          "type": "email_security.ETPEmail.Data.Attributes.Verdicts"
+        }
+      ],
+      [
+        "internal",
+        {
+          "class": "ParameterDef",
+          "name": "internal",
+          "properties": {
+            "description": "internal"
+          },
+          "type": "email_security.ETPEmail.Data.Attributes.Internal"
+        }
+      ]
+    ],
+    "id": "email_security/Attributes",
+    "name": "email_security.ETPEmail.Data.Attributes",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "AS",
+        {
+          "class": "ParameterDef",
+          "name": "AS",
+          "properties": {
+            "description": "AS"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "AV",
+        {
+          "class": "ParameterDef",
+          "name": "AV",
+          "properties": {
+            "description": "AV"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "AT",
+        {
+          "class": "ParameterDef",
+          "name": "AT",
+          "properties": {
+            "description": "AT"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "PV",
+        {
+          "class": "ParameterDef",
+          "name": "PV",
+          "properties": {
+            "description": "PV"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "YARA",
+        {
+          "class": "ParameterDef",
+          "name": "YARA",
+          "properties": {
+            "description": "YARA"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "ActionYARA",
+        {
+          "class": "ParameterDef",
+          "name": "ActionYARA",
+          "properties": {
+            "description": "ActionYARA"
+          },
+          "type": "String"
+        }
+      ]
+    ],
+    "id": "email_security/Verdicts",
+    "name": "email_security.ETPEmail.Data.Attributes.Verdicts",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "timestamp",
+        {
+          "class": "ParameterDef",
+          "name": "timestamp",
+          "properties": {
+            "description": "timestamp"
+          },
+          "type": "String"
+        }
+      ]
+    ],
+    "id": "email_security/Internal",
+    "name": "email_security.ETPEmail.Data.Attributes.Internal",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "attributes",
+        {
+          "class": "ParameterDef",
+          "name": "attributes",
+          "properties": {
+            "description": "attributes"
+          },
+          "type": "email_security.ETPEmail.Data.Included.Attributes"
+        }
+      ],
+      [
+        "type",
+        {
+          "class": "ParameterDef",
+          "name": "type",
+          "properties": {
+            "description": "type"
+          },
+          "type": "String"
+        }
+      ]
+    ],
+    "id": "email_security/Included",
+    "name": "email_security.ETPEmail.Data.Included",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "name",
+        {
+          "class": "ParameterDef",
+          "name": "name",
+          "properties": {
+            "description": "name"
+          },
+          "type": "String"
+        }
+      ]
+    ],
+    "id": "email_security/Attributes",
+    "name": "email_security.ETPEmail.Data.Included.Attributes",
+    "native_type": "complex"
+  },
+  {
+    "__className__": "ParameterType",
+    "__default_properties__": {
+      "controlType": "custom"
+    },
+    "__description__": "",
+    "base": null,
+    "fields": [
+      [
+        "total",
+        {
+          "class": "ParameterDef",
+          "name": "total",
+          "properties": {
+            "description": "total"
+          },
+          "type": "String"
+        }
+      ],
+      [
+        "copyright",
+        {
+          "class": "ParameterDef",
+          "name": "copyright",
+          "properties": {
+            "description": "copyright"
+          },
+          "type": "String"
+        }
+      ]
+    ],
+    "id": "email_security/Meta",
+    "name": "email_security.ETPEmail.Meta",
+    "native_type": "complex"
+  }
+]

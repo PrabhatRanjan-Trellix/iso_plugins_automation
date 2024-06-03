@@ -1,8 +1,8 @@
 user="root"   #user name of VM
 remote_ip="10.14.43.94"   #ip-address of FSO VM
 
-iso_plugin_path="/Users/prabhat.ranjan/Desktop/Project/iso-plugins/" #iso-plugins project path
-plugin_tar_path="/Users/prabhat.ranjan/Desktop/Project/plugins_tar" #folder store tar package of plugin
+iso_plugin_path="/Users/prabhat.ranjan/Desktop/Projects/iso-plugins/" #iso-plugins project path
+plugin_tar_path="/Users/prabhat.ranjan/Desktop/Projects/plugins_tar" #folder store tar package of plugin
 
 ##     -----****----set colour of echo----****----
 # Reset
