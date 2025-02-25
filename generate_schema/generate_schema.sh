@@ -20,10 +20,10 @@ docker cp "${saas_plugins_path}${plugin_name}" "${docker_container}:${parent_sou
 docker cp "${saas_plugins_path}/categories.json" "${docker_container}:${plugin_automation_base_path}/"
 docker exec -it fso_dev bash -c "\
     source /usr/python/global/bin/activate \
-    && export PYTHONPATH=\"\$PYTHONPATH:\$ISO_BASE/apps/engine/python\" \
+    && export PYTHONPATH="$PYTHONPATH:/vagrant/python"\
     && mkdir -p \"${plugins_schema_path_docker}/${plugin_name}\" \
     && cd \"${plugins_schema_path_docker}/${plugin_name}\" \
-    && /vagrant/apps/engine/python/bin/package_plugin -f \"${plugins_source_code_path}/${plugin_name}\" -o \"${plugins_schema_path_docker}/${plugin_name}\" -p "${plugin_automation_base_path}/categories.json" 
+    && /vagrant/python/bin/package_plugin -f \"${plugins_source_code_path}/${plugin_name}\" -o \"${plugins_schema_path_docker}/${plugin_name}\" -p "${plugin_automation_base_path}/categories.json" 
 "
 
 parent_schema_path=$(get_parent_dir "${plugins_schema_path}/${plugin_name}")

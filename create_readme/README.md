@@ -1,66 +1,82 @@
 Plugin Parameters :
 
-	url(String)                                      - URL of cloud Email Security Server, example: https://etp.us.fireeye.com. Accept valid URL only
-	api_key(String)                                  - ETP API key
+	api_key(String)                                  - API key
 
 Commands :
 
-	1. retrieve_message
-		Retrieves the particular message with the specified Email Security message ID.
+	1. lookup_indicators
+		Lookup IP Addresses, URLs, Domains, File Hashes.At least one from domains, hashes, ip_addresses, urls is a required field.Multiple indicators can also be submitted for lookup.
 		input -
-			message_id(String List)                        - The ID of the Email Security message.
-			traffic_type(String)                           - The direction of the email traffic.Accepted value are (inbound, outbound)
+			domains(String List)                           - Domains to scan.Accept valid domains only
+			hashes(String List)                            - File Hashes To Query (MD5, SHA-1, SHA-256)).Accept valid hashes only
+			ip_addresses(String List)                      - IP Addresses To Query.Accept valid ip-addresses only
+			urls(String List)                              - URLs To Query.Accept valid urls only
+			enable_raw_json(Bool)                          - Mark true to get API raw json response
+			force_scan(Bool)                               - If True, plugin will automatically submit the resource for analysis if no report is found for it in VirusTotal's database.
+			max_resolutions(Integer)                       - Maximum number of latest passive DNS resolutions.Accept positive integer only.Default is 10.
 		output -
-			etp_email(email_security.ETPEmail List)        - User ComplexType of Email Security Message Trace
-			raw_json(JSON)                                 - Email Security Message Trace Raw Response
-			retrieved_message_ids(String List)             - List of message id, for which message retrieved
+			vt_lookup(VTLookUp)                            - Virus Total response for Lookup Indicators
+			raw_json(String)                               - API response in JSON String format
 			task_success(Bool)                             - False if any part of task fails
 			status_msg(String)                             - Task execution status message
 			response_code(Integer)                         - Response code of the api response
 
-	2. email_search
-		Retrieves email trace information as per the attributes and traffic type that are accessible in the Email Security.Each input parameters can have max of 10 values
+	2. lookup_hashes
+		Lookup File Hashes
 		input -
-			from_email(String List)                        - List of senders email.Accept valid emails only
-			recipients(String List)                        - List of recipients.Accept valid emails only
-			subject(String)                                - The subject of email
-			from_time(String)                              - Timestamp search start. Please provide time in ISO8601 format. (eg. '2024-01-02T15:04:05.000z').Both 'from_time' and 'to_time' are required fields to specify the datetime range for the search.
-			to_time(String)                                - Timestamp search stop. Please provide time in ISO8601 format. (eg. 2024-01-02T15:04:05.000z).Both 'from_time' and 'to_time' are required fields to specify the datetime range for the search. If 'from_time' is provided but 'to_time' is not, the current datetime will be used as the to_time time.
-			status(String)                                 - email status. Accepted values are: (accepted, deleted, delivered, delivered (retroactive), dropped, dropped oob, dropped (oob retroactive), permanent failure, processing, quarantined, rejected, temporary failure, scanned, scan bypassed, split)
-			has_attachment(Bool)                           - Mark true if email contains attachment
-			min_message_size(Float)                        - Minimum size of the email.Accept positive float only
-			max_message_size(Float)                        - Maximum size of the email.Accept positive float only
-			sender_ip(String List)                         - List of sending SMTP IPs.Accept valid ip_addresses only
-			domains(String List)                           - List of domains. Accept valid domains only
-			limit(Integer)                                 - Max number of emails to return.Default is 20.Accept positive integer only
+			hashes(String List)                            - File Hashes To Query (MD5, SHA-1, SHA-256)).Accept valid hashes only
+			enable_raw_json(Bool)                          - Mark true to get API raw json response
 		output -
-			etp_email(email_security.ETPEmail)             - User ComplexType of Email Security Email Trace
-			raw_json(JSON)                                 - Email Security Email Trace Raw Response
+			hash_scan_report(HashScanReport)               - Virus Total response for Lookup hashes
+			raw_json(String)                               - API response in JSON String format
 			task_success(Bool)                             - False if any part of task fails
 			status_msg(String)                             - Task execution status message
 			response_code(Integer)                         - Response code of the api response
 
-	3. message_remediate
-		Remediates messages in ETP by specified Message IDs
+	3. lookup_ip_addresses
+		Lookup IP Addresses
 		input -
-			message_id(String List)                        - The ID of the Email Security message.
-			action(String)                                 - The action to take on the message IDs, accepted values are (quarantine, move, delete). If action selected as move, then move_to is required parameter
-			move_to(String)                                - The folder to move message to in the users inbox.If action selected as move, then move_to is required parameter
+			ip_addresses(String List)                      - IP Addresses To Query.Accept valid ip-addresses only
+			enable_raw_json(Bool)                          - Mark true to get API raw json response
 		output -
-			remediate_response(email_security.ETPMessageRemediate)                  - User ComplexType of Email Security Message Remediate
-			remediated_message_ids(String List)            - List of message IDs for emails that have been remediated
-			raw_json(JSON)                                 - Email Security Message Remediate Raw Response
+			ip_scan_report(IPScanReport)                   - Virus Total response for Lookup IP Addresses
+			raw_json(String)                               - API response in JSON String format
 			task_success(Bool)                             - False if any part of task fails
 			status_msg(String)                             - Task execution status message
 			response_code(Integer)                         - Response code of the api response
 
-	4. url_click_report
-		Retrieves URL click reports
+	4. lookup_urls
+		Lookup URLs
 		input -
-			alert_id(String)                               - The ID of the Advance threat alert
+			urls(String List)                              - URLs To Query.Accept valid urls only
+			enable_raw_json(Bool)                          - Mark true to get API raw json response
 		output -
-			url_click_report(email_security.ETPUrlClickReport)                      - User ComplexType of Email Security URL Click Report
-			raw_json(JSON)                                 - URL click report Raw Response
+			url_scan_report(URLScanReport)                 - Virus Total response for Lookup urls
+			raw_json(String)                               - API response in JSON String format
+			task_success(Bool)                             - False if any part of task fails
+			status_msg(String)                             - Task execution status message
+			response_code(Integer)                         - Response code of the api response
+
+	5. lookup_domains
+		Lookup Domains
+		input -
+			domains(String List)                           - Domains to scan.Accept valid domains only
+			enable_raw_json(Bool)                          - Mark true to get API raw json response
+		output -
+			domain_scan_report(DomainScanReport)           - Virus Total response for Lookup domains
+			raw_json(String)                               - API response in JSON String format
+			task_success(Bool)                             - False if any part of task fails
+			status_msg(String)                             - Task execution status message
+			response_code(Integer)                         - Response code of the api response
+
+	6. analyse_file
+		Submit file for analysis on virustotal
+		input -
+			file_ref(String)                               - File ref on cloud or file uuid
+			enable_raw_json(Bool)                          - Mark true to get API raw json response
+		output -
+			file_scan_report(FileScanReport)               - Virus Total response for analyse file
+			raw_json(String)                               - API response in JSON String format
 			task_success(Bool)                             - False if any part of task fails
 			status_msg(String)                             - Task execution status message
 			response_code(Integer)                         - Response code of the api response

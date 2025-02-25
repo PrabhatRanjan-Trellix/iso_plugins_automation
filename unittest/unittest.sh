@@ -19,12 +19,12 @@ docker cp "${saas_plugins_path}${plugin_name}" "${docker_container}:${parent_dir
 if [ "$2" ]; then
   docker exec -it fso_dev bash -c "\
       source /usr/python/global/bin/activate \
-      && export PYTHONPATH=\"\$PYTHONPATH:\$ISO_BASE/apps/engine/python\" \
+      && export PYTHONPATH="$PYTHONPATH:/vagrant/python"\
       && pytest -s \$(find ${plugins_source_code_path}/${plugin_name}/unit_test -name '*_unit_test.py')::$2"
 
 else
   docker exec -it fso_dev bash -c "\
     source /usr/python/global/bin/activate \
-    && export PYTHONPATH=\"\$PYTHONPATH:\$ISO_BASE/apps/engine/python\" \
+    && export PYTHONPATH="$PYTHONPATH:/vagrant/python"\
     && pytest -s \$(find ${plugins_source_code_path}/${plugin_name}/unit_test -name '*_unit_test.py')"
 fi

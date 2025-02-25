@@ -17,11 +17,11 @@ docker cp "${saas_plugins_path}${plugin_name}" "${docker_container}:${parent_sou
 
 docker exec -it fso_dev bash -c "\
     source /usr/python/global/bin/activate \
-    && export PYTHONPATH=\"\$PYTHONPATH:\$ISO_BASE/apps/engine/python\" \
+    && export PYTHONPATH="$PYTHONPATH:/vagrant/python"\
     && mkdir -p \"${plugins_source_code_path}/${plugin_name}\" \
     && cd \"${plugins_source_code_path}/${plugin_name}\" \
-    && /vagrant/apps/engine/python/bin/package_plugin -f \"${plugins_source_code_path}/${plugin_name}\" -o \"${plugins_target_path}/${plugin_name}\" --include-deps \
-    && /vagrant/apps/engine/python/bin/package_plugin -f \"${plugins_source_code_path}/${plugin_name}\" -o \"${plugins_target_path}/${plugin_name}\" \
+    && /vagrant/python/bin/package_plugin -f \"${plugins_source_code_path}/${plugin_name}\" -o \"${plugins_target_path}/${plugin_name}\" --include-deps \
+    && /vagrant/python/bin/package_plugin -f \"${plugins_source_code_path}/${plugin_name}\" -o \"${plugins_target_path}/${plugin_name}\" \
 "
 
 parent_plugins_tar_path=$(get_parent_dir "${plugins_tar_path}/${plugin_name}")
