@@ -6,7 +6,7 @@ rm -rf $iso_plugins_automation/create_readme/package
 mkdir -p $iso_plugins_automation/create_readme/package
 sh $iso_plugins_automation/generate_tar/generate_tar.sh $plugin_name
 # untar plugin tar file to package folder
-tar -zxf $plugins_tar_path/$plugin_name/`ls $plugins_tar_path/$plugin_name | head -n 1` -C $iso_plugins_automation/create_readme/package
+tar -zxf $plugins_tar_path/$plugin_name/`ls $plugins_tar_path/$plugin_name | grep -v '_sr' | head -n 1` -C $iso_plugins_automation/create_readme/package
 #plugin_name_without_underscore="${plugin_name//_}"
 
 
